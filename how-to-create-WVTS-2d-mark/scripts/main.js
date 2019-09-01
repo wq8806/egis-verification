@@ -43,16 +43,16 @@ require(['egis', 'olms','ol'], function (egis, olms,ol) {
     //样式集合
     var styles = {
         "standard": {
-            spriteUrl: "http://10.18.1.139:8089/egis/base/v1/wvts/sprites/1/sprite.json", // http://10.18.1.185:80/api/v1/sprites/1/sprite.json
-            spriteImgUrl: "http://10.18.1.139:8089/egis/base/v1/wvts/sprites/1/sprite.png", //http://10.18.1.185:80/api/v1/sprites/1/sprite.png
-            styleUrl: "http://10.18.1.139:8089/egis/base/v1/wvts/styles/1"   // http://10.18.1.185/api/v1/styles/1
+            spriteUrl: "http://10.18.1.139:8089/egis/base/v1/wvts/sprites/8/sprite.json", // http://10.18.1.185:80/api/v1/sprites/1/sprite.json
+            spriteImgUrl: "http://10.18.1.139:8089/egis/base/v1/wvts/sprites/8/sprite.png", //http://10.18.1.185:80/api/v1/sprites/1/sprite.png
+            styleUrl: "http://10.18.1.139:8089/egis/base/v1/wvts/styles/8"   // http://10.18.1.185/api/v1/styles/1
         }
     }
 
     // 创建 天地图瓦片图层
     var tiandituvec = new egis.carto.TileLayer({
         "name": "天地图矢量",
-        "layers": "vec", "//": "图层名称",
+        "layers": "img", "//": "图层名称",
         "matrix": 21, "//": "切图级别小于等于切图级别",
         "matrixSet": "c", "//": "切图策略",
         "matrixPrefix": "", "//": "切图策略加冒号：",
@@ -64,7 +64,7 @@ require(['egis', 'olms','ol'], function (egis, olms,ol) {
         "visible": true, "//": "是否显示",
         "crossOrigin": "anonymous",
         "style": "default",
-        "wrapX": true,
+        "wrapX": false,
         "url": "http://10.18.1.139:8089/egis/base/v1/wmts"
     });
 
@@ -82,7 +82,7 @@ require(['egis', 'olms','ol'], function (egis, olms,ol) {
             declutterDistance:1,
             projection: "EPSG:4490",
             extent: [-180, -90, 180, 90],
-            wrapX:true,
+            wrapX:false,
             tileSize: 512,
         })
     }
@@ -92,7 +92,12 @@ require(['egis', 'olms','ol'], function (egis, olms,ol) {
     egismap.addLayer(compositeLayer);
 
     //初始时隐藏所有矢量瓦片图层信息---以标注版样式为例
-    hideAllMark();
+    var allLayersId = [];
+    for(var i=0,len = 926;i<len;i++){ //---以标注版样式为例
+        allLayersId.push(i);
+    }
+    compositeLayer.loadStyle(allLayersId,null);
+    // hideAllMark();
 
 
 
