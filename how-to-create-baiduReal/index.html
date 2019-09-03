@@ -8,6 +8,10 @@
     <link href="./vendor/ol/ol.css" rel="stylesheet" />
 </head>
 <body>
+<div style="position: absolute;left:100px;top:50px;z-index: 1000">
+    <button onclick="show(false)">隐藏实时路况</button>
+    <button onclick="show(true)">显示实时路况</button>
+</div>
 <div id="map"></div>
 <script type="text/javascript">
     proj4.defs("EPSG:4490","+proj=longlat +ellps=GRS80 +no_defs");
@@ -446,9 +450,12 @@
 
     // 创建 天地图矢量 瓦片图层
     var tiandituvec = crtLayerXYZ('vec_c',"EPSG:4490",1);
+
+    //创建天地图注记
+    var tianditucva = crtLayerXYZ('cva_c',"EPSG:4490",1);
     var map = new ol.Map({
         layers: [
-            tiandituvec,baiduLayer
+            tiandituvec,tianditucva,baiduLayer
         ],
         // 设置显示地图的视图
         view: new ol.View({
@@ -458,6 +465,9 @@
         }),
         target: 'map'
     });
+    function show(isShow) {
+       baiduLayer.setVisible(isShow);
+    }
 </script>
 </body>
 </html>
