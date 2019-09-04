@@ -22,6 +22,7 @@ target/
 
 .idea
 .idea/
+*/.idea/
 .metadata/
 
 .cache
