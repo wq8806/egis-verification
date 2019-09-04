@@ -452,17 +452,67 @@
     // 创建 天地图矢量 瓦片图层
     var tiandituvec = crtLayerXYZ('vec_c',"EPSG:4490",1);
 
+
+
+    function createTianDituWMTS() {
+        var resolutions = [
+            0.703125,
+            0.3515625,
+            0.17578125,
+            0.087890625,
+            0.0439453125,
+            0.02197265625,
+            0.010986328125,
+            0.0054931640625,
+            0.00274658203125,
+            0.001373291015625,
+            0.0006866455078125,
+            0.00034332275390625,
+            0.000171661376953125,
+            0.0000858306884765625,
+            0.00004291534423828125,
+            0.000021457672119140625,
+            0.000010728836059570312,
+            0.000005364418029785156,
+            0.000002682209014892578,
+            0.000001341104507446289
+        ];
+        //瓦片矩阵
+        var matrixIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+
+        var originUrl = "http://t{0-6}.tianditu.gov.cn/vec_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156";
+        var tiandituLayer =new ol.layer.Tile({
+            source: new ol.source.WMTS({
+                name: "中国矢量1-14级",
+                url: "http://10.18.1.139:8089/egis/base/v1/wmts",
+                layer: "vec",
+                style: "default",
+                matrixSet: "c",
+                format: "tiles",
+                projection:"EPSG:4490",
+                wrapX: true,//地图缩小后，防止在一个页面出现多个一样的地图
+                tileGrid: new ol.tilegrid.WMTS({
+                    origin: [-180,90],
+                    resolutions: resolutions,//slice方法不清楚的请百度
+                    matrixIds: matrixIds
+                })
+            })
+        });
+        return tiandituLayer;
+    }
+
     //创建天地图注记
     var tianditucva = crtLayerXYZ('cva_c',"EPSG:4490",1);
     var map = new ol.Map({
         layers: [
-            tiandituvec,tianditucva,baiduLayer
+            createTianDituWMTS(),tianditucva,baiduLayer
         ],
         // 设置显示地图的视图
         view: new ol.View({
             center: [116, 40],
             projection: 'EPSG:4490',
-            zoom: 13
+            zoom: 13,
+            minZoom:1
         }),
         target: 'map'
     });
