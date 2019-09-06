@@ -1,0 +1,22 @@
+{
+  "name": "egis-verification",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wq8806/egis-verification.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wq8806/egis-verification/issues"
+  },
+  "homepage": "https://github.com/wq8806/egis-verification#readme",
+  "dependencies": {
+    "cesium": "^1.59.0"
+  }
+}
