@@ -13,7 +13,18 @@
 </head>
 <body>
 <div id="cesiumContainer"></div>
-   <script>
+   <script type="text/javascript">
+       var type = "ww";
+       var tiandituImgUrl,tiandituCvaUrl,terrainUrl;
+       if(type=="nw"){
+           tiandituImgUrl=tiandituCvaUrl="http://10.18.1.139:8089/egis/base/v1/wmts";
+           terrainUrl="http://10.18.33.78/egis/base/v1/wtts/china-12";
+       }
+       else{
+           tiandituImgUrl="http://t0.tianditu.gov.cn/img_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156";
+           tiandituCvaUrl="http://t0.tianditu.gov.cn/cta_c/wmts?tk=4f62e1d82bd46e2ff470b291c2260156";
+           terrainUrl="http://data.marsgis.cn/terrain";
+       }
        var viewer = new Cesium.Viewer("cesiumContainer", {
            animation: false,  //是否显示动画控件
            baseLayerPicker: false, //是否显示图层选择控件
@@ -23,7 +34,7 @@
            navigationHelpButton: false, //是否显示帮助信息控件
            infoBox: false,  //是否显示点击要素之后显示的信息
            imageryProvider:new Cesium.WebMapTileServiceImageryProvider({
-               url: "http://10.18.1.139:8089/egis/base/v1/wmts",
+               url: tiandituImgUrl,
                layer: "img",
                style: "default",
                format: "tiles",
@@ -58,7 +69,7 @@
 
        //全球影像中文注记服务
        var vectorProvider = new Cesium.WebMapTileServiceImageryProvider({
-           url: "http://10.18.1.139:8089/egis/base/v1/wmts",
+           url: tiandituCvaUrl,
            layer: "cta",
            style: "default",
            format: "tiles",
@@ -91,7 +102,7 @@
 
        //添加cesium地形图层
        var terrainLayer = new Cesium.CesiumTerrainProvider({
-           url: "http://10.18.33.78/egis/base/v1/wtts/china-12", // 默认立体地表
+           url: terrainUrl, // 默认立体地表
            // 请求照明
            // requestVertexNormals: true,
            // 请求水波纹效果viewer.terrainProvider = terrainLayer;
